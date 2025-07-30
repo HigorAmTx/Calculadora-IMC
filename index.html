@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de IMC</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!--Texto de apresentação-->
+        <div class="page-content">
+            <h1>O que é o IMC?</h1>
+            <h2>O IMC, ou <span>Índice de Massa Corporal,</span> é um cálculo utilizado para avaliar se uma pessoa está no peso ideal em relação à sua altura. Ele é obtido dividindo o peso (em quilogramas) pela altura ao quadrado (em metros). O resultado do IMC ajuda a identificar se a pessoa está abaixo do peso, com peso normal, com sobrepeso ou obesa. </h2>
+        </div>
+
+    <!--Desenho ilustrativo-->
+        <img src="Weights-amico (2).png" alt="Weights-amico" class="draw">
+
+    <!--Div da calculadora-->
+        <div class="body-content">
+            <h1>Calculadora de IMC</h1>
+            <h2>Preencha os campos abaixo para calcular seu IMC</h2>
+            
+                <label>Peso Kg:</label>
+                <input type="number" id="peso" placeholder="KG" required>
+                <label>Altura Cm:</label>
+                <input type="number" id="altura" placeholder="CM" required>
+            
+    <!--onclick executa função de calculo-->
+            <button id="btn-calc" onclick="calculo()">Calcular</button>
+            <button id="btn-calc" onclick="limpar()">Limpar</button>
+            
+            <div id="resultado"></div>
+            <div id="classificação"></div>
+
+    <!--Tabela de classificação-->
+            <table class="tabela">
+                <tr>
+                    <th>IMC</th>
+                    <th>Classificação</th>
+                    <th>Grau de obesidade</th>
+                </tr>
+                <tr>
+                    <td>Menor que 18.5</td>
+                    <td>Abaixo do peso</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>Entre 18.5 e 24.9</td>
+                    <td>Normal</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>Entre 25.0 e 29.9</td>
+                    <td>Sobrepeso</td>
+                    <td>I</td>
+                </tr>
+                <tr>
+                    <td>Entre 30.0 e 39.9</td>
+                    <td>Obesidade</td>
+                    <td>II</td>
+                </tr>
+                <tr>
+                    <td>Maior que 40.0</td>
+                    <td>Obesidade grave</td>
+                    <td>III</td>
+                </tr>
+            </table>
+
+        </div>
+
+        <script>
+            function calculo(){
+              var peso = document.getElementById("peso").value;
+              var altura = document.getElementById("altura").value;
+        
+              if (!peso || !altura || Number(peso) <= 0 || Number(altura) <= 0){
+                alert("Preencha todos os campos com valores válidos.");
+                return;
+              }
+        
+              var alturaEmMetros = Number(altura) / 100;
+              var imc = Number(peso) / (alturaEmMetros * alturaEmMetros);
+        
+              document.getElementById("resultado").innerHTML = `Resultado: <strong>${imc.toFixed(2)}</strong>`;
+        
+              var classificacaoEl = document.getElementById("classificação");
+              let texto = "—";
+              if (imc < 18.5) {
+                texto = "Abaixo do peso";
+              } else if (imc >= 18.5 && imc <= 24.9) {
+                texto = "Peso normal";
+              } else if (imc >= 25 && imc <= 29.9) {
+                texto = "Sobrepeso";
+              } else if (imc >= 30 && imc <= 39.9) {
+                texto = "Obesidade";
+              } else if (imc >= 40) {
+                texto = "Obesidade grave";
+              }
+              classificacaoEl.textContent = "Classificação: " + texto;
+            }
+        
+            function limpar(){
+              document.getElementById("peso").value = "";
+              document.getElementById("altura").value = "";
+              document.getElementById("resultado").innerHTML = "Resultado: <strong>—</strong>";
+              document.getElementById("classificação").textContent = "Classificação: —";
+            }
+          </script>
+</body>
+</html>
